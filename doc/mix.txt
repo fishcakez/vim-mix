@@ -1,0 +1,75 @@
+*mix.txt*   Asynchronous mix dispatcher and error parser
+
+Author:  James Fish <james at fishcakez.com>
+Repo:    https://github.com/fishcakez/vim-mix
+License: Apache License, Version 2.0  {{{
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+}}}
+
+==============================================================================
+INTRODUCTION                                                      *mix*
+
+Run mix asynchronously without loosing focus of vim. Requires vim-dispatch.
+
+=============================================================================
+COMMANDS                                                  *mix-commands*
+
+                                                          *:Mix*
+:Mix [arguments]
+                    Execute mix in the foreground, when mix finishes parse the
+                    output to create a quickfixlist.
+
+:Mix! [arguments]
+                    Execute mix in the background, use |:Copen| to parse the
+                    output and create a quickfixlist.
+
+:Mix!! [arguments]
+                    Execute mix in a new, focused, window.
+
+:Mix!!! [arguments]
+                    Execute mix in a new, unfocused, window.
+
+                                                          *:MixEnv*
+:MixEnv [value]
+                    Set the MIX_ENV env value to use with |:Mix|. If no value is
+                    no MIX_ENV value will be passed when calling |:Mix|
+
+                                                          *:MixFill*
+:MixFill
+                    Fill the |:Mix| completion cache. This will cache local
+                    tasks and deps if any are found.
+
+                                                          *:MixPurge*
+:MixPurge
+                    Purge the |:Mix| completion cache. The cache will be
+                    refilled lazily when used.
+
+============================================================================
+EXAMPLE USAGE                                            *mix-example*
+
+>
+    " Compile in foreground
+    :Mix compile
+    " Set MIX_ENV=test for all future uses of |:Mix|
+    :MixEnv test
+    " Fetch (test) deps in foreground
+    :Mix deps.get
+    " Run tests in background
+    :Mix! test
+    " Parse test output for errors
+    :Copen
+    " unset MIX_ENV for all future uses of |:Mix|
+    :MixEnv
+<
+
+============================================================================
